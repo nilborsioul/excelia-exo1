@@ -58,6 +58,7 @@ def login():
         response.set_cookie("fb_session", cookie_value, path="/")
         redirect("/user/")
 
+
 @route("/signup", method=["GET", "POST"])
 @route("/signup/", method=["GET", "POST"])
 def signup():
