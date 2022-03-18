@@ -1,11 +1,13 @@
-from bottle import route, run, template, request, response, redirect, abort
+from bottle import route, run, template, request, response, redirect
 import sqlite3
 from helpers import addition, generate_cookie_value
 
+
 @route("/addition/<a>/<b>")
 @route("/addition/<a>/<b>/")
-def routeaddition(a,b):
-    return addition(a,b)
+def routeaddition(a, b):
+    return addition(a, b)
+
 
 @route("/user")
 @route("/user/")
@@ -20,12 +22,11 @@ def user_info():
     if result is None:
         redirect("/login")
 
-    return template('user_info', username = result[1], email = result[2])
+    return template('user_info', username=result[1], email=result[2])
 
 
 @route("/login", method=["GET", "POST"])
 @route("/login/", method=["GET", "POST"])
-
 def login():
     if request.method == 'GET':
         return template("login_template")
@@ -35,7 +36,9 @@ def login():
 
         conn = sqlite3.connect('fb.db')
         cursor = conn.cursor()
-        cursor.execute(f"SELECT password FROM facebook WHERE username = '{username}' ")
+        cursor.execute(
+            f"SELECT password FROM facebook WHERE username = '{username}' "
+        )
         db_password = cursor.fetchone()
         print(db_password)
         if db_password[0] == "":
@@ -46,11 +49,14 @@ def login():
 
         cookie_value = generate_cookie_value()
 
-        cursor.execute(f"UPDATE facebook SET cookie = '{cookie_value}' WHERE username = '{username}'")
+        cursor.execute(
+            f"UPDATE facebook SET cookie = '{cookie_value}' WHERE username = '{username}'"
+        )
         conn.commit()
 
         response.set_cookie("fb_session", cookie_value, path="/")
         redirect("/user/")
+
 
 def signup():
     if request.method == "GET":
