@@ -1,9 +1,11 @@
 from bottle import route, run, template, request, response, redirect, abort
 import sqlite3
-import random
+from helpers import addition, generate_cookie_value
 
-def generate_cookie_value():
-    return str("".join(random.choice("0123456789ABCEDFabcdef@&!") for i in range(128)))
+@route("/addition/<a>/<b>")
+@route("/addition/<a>/<b>/")
+def routeaddition(a,b):
+    return addition(a,b)
 
 @route("/user")
 @route("/user/")
