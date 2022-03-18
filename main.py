@@ -64,13 +64,12 @@ def signup():
         print(password)
         conn = sqlite3.connect("fb.db")
         cursor = conn.cursor()
-        
         sql_request = f"INSERT INTO facebook (username, email, password) VALUES ('{username}','{email}','{password}')"
         print(sql_request)
         cursor.execute(sql_request)
         conn.commit()
         return {
-            "error": False, 
+            "error": False,
             "message": f"Bien enregistre en tant que {username} id: {cursor.lastrowid}",
         }
 
