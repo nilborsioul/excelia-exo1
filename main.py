@@ -13,9 +13,9 @@ def routeaddition(a, b):
 @route("/user")
 @route("/user/")
 def user_info():
-    fb_session = request.get_cookie('fb_session')
+    fb_session = request.get_cookie("fb_session")
 
-    conn = sqlite3.connect('fb.db')
+    conn = sqlite3.connect("fb.db")
     cursor = conn.cursor()
     cursor.execute(f"SELECT * FROM facebook WHERE cookie = '{fb_session}'")
     result = cursor.fetchone()
@@ -23,23 +23,21 @@ def user_info():
     if result is None:
         redirect("/login")
 
-    return template('user_info', username=result[1], email=result[2])
+    return template("user_info", username=result[1], email=result[2])
 
 
 @route("/login", method=["GET", "POST"])
 @route("/login/", method=["GET", "POST"])
 def login():
-    if request.method == 'GET':
+    if request.method == "GET":
         return template("login_template")
     else:
         username = request.forms.username
         password = request.forms.password
 
-        conn = sqlite3.connect('fb.db')
+        conn = sqlite3.connect("fb.db")
         cursor = conn.cursor()
-        cursor.execute(
-            f"SELECT password FROM facebook WHERE username = '{username}' "
-        )
+        cursor.execute(f"SELECT password FROM facebook WHERE username = '{username}' ")
         db_password = cursor.fetchone()
         print(db_password)
         if db_password[0] == "":
@@ -83,4 +81,4 @@ def signup():
         }
 
 
-run(host='0.0.0.0', port=sys.argv[1], reloader=True)
+run(host="0.0.0.0", port=sys.argv[1], reloader=True)

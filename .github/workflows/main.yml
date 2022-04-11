@@ -67,5 +67,3 @@ jobs:
           heroku_email: "louis.nilbor@gmail.com"
           heroku_app_name: "excelia-exo-1"
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-
-

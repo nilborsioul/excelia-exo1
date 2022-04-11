@@ -17,4 +17,4 @@ def addition(a, b):
     {'result': 6}
     """
     y = int(a) + int(b)
-    return {'result': y}
+    return {"result": y}
